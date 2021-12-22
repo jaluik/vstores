@@ -1,4 +1,4 @@
-import Vstore from './Vstore';
+import Vstore from './core/Vstore';
 
 const vstore = new Vstore();
 
