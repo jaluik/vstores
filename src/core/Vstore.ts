@@ -55,8 +55,25 @@ class Vstore {
     }
     return key;
   }
-  getExpireAt(config?: VstoreSetConfig) {
-    // TODO
+  getExpireAt(config?: VstoreSetConfig): undefined | number {
+    if (config.expireAt) {
+      // like '2022-01-01 12:00:00'
+      const obj = dayjs(config.expireAt);
+      if (obj.isValid()) {
+        return obj.valueOf();
+      }
+      return void 0;
+    }
+
+    if (config.expire) {
+      // like '2022-01-01 12:00:00'
+      const obj = dayjs(config.expireAt);
+      if (obj.isValid()) {
+        return obj.valueOf();
+      }
+      return void 0;
+    }
+
     return void 0;
   }
 }
