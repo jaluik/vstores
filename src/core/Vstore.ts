@@ -66,8 +66,12 @@ class Vstore {
     }
 
     if (config.expire) {
-      // like '2022-01-01 12:00:00'
-      const obj = dayjs(config.expireAt);
+      let obj;
+      if (typeof config.expire === 'number') {
+        obj = dayjs().add(config.expire, 's');
+      } else {
+        obj = dayjs().add(config.expire?.[0], config.expire?.[1]);
+      }
       if (obj.isValid()) {
         return obj.valueOf();
       }
