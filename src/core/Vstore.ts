@@ -56,21 +56,23 @@ class Vstore {
     return key;
   }
   getExpireAt(config?: VstoreSetConfig): undefined | number {
-    if (config.expireAt) {
+    if (config.expireAt || (!config.expire && this.config.expireAt)) {
+      const expireAt = config.expireAt || this.config.expireAt;
       // like '2022-01-01 12:00:00'
-      const obj = dayjs(config.expireAt);
+      const obj = dayjs(expireAt);
       if (obj.isValid()) {
         return obj.valueOf();
       }
       return void 0;
     }
 
-    if (config.expire) {
+    if (config.expire || this.config.expire) {
+      const expire = config.expire || this.config.expire;
       let obj;
-      if (typeof config.expire === 'number') {
-        obj = dayjs().add(config.expire, 's');
+      if (typeof expire === 'number') {
+        obj = dayjs().add(expire, 's');
       } else {
-        obj = dayjs().add(config.expire?.[0], config.expire?.[1]);
+        obj = dayjs().add(expire?.[0], expire?.[1]);
       }
       if (obj.isValid()) {
         return obj.valueOf();
