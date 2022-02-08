@@ -1,5 +1,5 @@
 {
-  "name": "vstore",
+  "name": "vstores",
   "version": "0.0.1",
   "description": "multi-platform storage",
   "main": "./dist/index.js",
