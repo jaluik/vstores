@@ -1,12 +1,14 @@
 import { VstoreConfig, VstoreSetConfig } from '../types/types';
 import { filterEmptyValueAndFuncValue } from '../utils/utils';
+import webAdapter from '../adapter/web';
 import dayjs from 'dayjs';
 
 class Vstore {
   config: VstoreConfig;
 
   constructor(config?: VstoreConfig) {
-    this.config = config;
+    this.config = config || {};
+    this.config.adapter = this.config.adapter || webAdapter;
   }
   set(originalKey, value, config?: VstoreSetConfig) {
     const key = this.getKey(originalKey);

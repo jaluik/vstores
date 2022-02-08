@@ -1,7 +1,7 @@
 export interface VstoreConfig {
   expireAt?: string | number;
   expire?: number | [number, string];
-  adapter: any;
+  adapter?: any;
   formatKey?: (v: string) => string;
 }
 
