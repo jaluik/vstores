@@ -3,14 +3,18 @@ import { filterEmptyValueAndFuncValue } from '../utils/utils';
 import webAdapter from '../adapter/web';
 import dayjs from 'dayjs';
 
-class Vstore {
+class Vstore<T extends object> {
   config: VstoreConfig;
 
   constructor(config?: VstoreConfig) {
     this.config = config || {};
     this.config.adapter = this.config.adapter || webAdapter;
   }
-  set(originalKey, value, config?: VstoreSetConfig) {
+  set<K extends keyof T>(
+    originalKey: K,
+    value: T[K],
+    config?: VstoreSetConfig
+  ) {
     const key = this.getKey(originalKey);
     const expireAt = this.getExpireAt(config);
     const originData = {
@@ -22,8 +26,9 @@ class Vstore {
     if (data) {
       this.config.adapter.set(key, data);
     }
+    return this;
   }
-  get(originalKey) {
+  get<K extends keyof T>(originalKey: K): T[K] | undefined {
     const key = this.getKey(originalKey);
     const result = this.config.adapter.get(key);
     if (!result) {
@@ -51,15 +56,15 @@ class Vstore {
   clear() {
     return this.config.adapter.clear();
   }
-  getKey(key) {
+  private getKey(key) {
     if (this.config.formatKey) {
       return this.config.formatKey(key);
     }
     return key;
   }
-  getExpireAt(config?: VstoreSetConfig): undefined | number {
-    if (config.expireAt || (!config.expire && this.config.expireAt)) {
-      const expireAt = config.expireAt || this.config.expireAt;
+  private getExpireAt(config?: VstoreSetConfig): undefined | number {
+    if (config?.expireAt || (!config?.expire && this.config.expireAt)) {
+      const expireAt = config?.expireAt || this.config.expireAt;
       // like '2022-01-01 12:00:00'
       const obj = dayjs(expireAt);
       if (obj.isValid()) {
@@ -68,7 +73,7 @@ class Vstore {
       return void 0;
     }
 
-    if (config.expire || this.config.expire) {
+    if (config?.expire || this.config.expire) {
       const expire = config.expire || this.config.expire;
       let obj;
       if (typeof expire === 'number') {
@@ -83,6 +88,9 @@ class Vstore {
     }
 
     return void 0;
+  }
+  create<D extends object>(config?: VstoreConfig) {
+    return new Vstore<D>(config);
   }
 }
 

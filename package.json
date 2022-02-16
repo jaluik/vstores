@@ -16,9 +16,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "tsc -w  --sourceMap",
+    "dev": "tsup src/index.ts --format cjs,esm --watch --dts --sourcemap",
     "test": "jest --collectCoverage",
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean"
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean --minify"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.5",
@@ -32,5 +32,9 @@
   },
   "dependencies": {
     "dayjs": "^1.10.7"
-  }
+  },
+  "files": [
+    "dist/",
+    "src/"
+  ]
 }

@@ -12,8 +12,8 @@ export interface VstoreSetConfig
 
 export interface SavedDataType {
   data: any;
-  /**过期时间,毫秒为单位 */
+  /** Set expiration time in milliseconds  */
   expireAt?: number;
-  /**是否只使用一次*/
+  /** used once */
   once?: boolean;
 }
