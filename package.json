@@ -1,6 +1,6 @@
 {
   "name": "vstores",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "multi-platform storage",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
