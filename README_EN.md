@@ -1,6 +1,6 @@
 # vstores
 
-English | [中文](README.md)
+[中文](README.md) | English
 
 Typescript friendly, Powerful, Expiration time supported, and multi-platform storage.
 
@@ -41,24 +41,30 @@ store.get('test');
 
 ```typescript
 import vstores from 'vstores'
-/** Globally configure the expiration time of the stored value, you can set the expiration days and seconds from the current date, or specify a specific time */
+/**  Global configuration for Expiration time*/
 const store = vstores.create({
-    //2024-12-24 14:00过期
+    //You can specify a specific expire time, such as: 2024-12-24 14:00.
     expireAt: "2024-12-24 14:00";
-    //Start after setting the key successfully, expire after 36000 milliseconds
-    // expire: 36000;
+    //You can set the time to expire from the current date. eg expire after 60 seconds or 3 days
+    expire: 60  //or [3, "day"];
+    //format key, eg if key is name, the real saved key will be before-name-after
+    formatKey: (v)=> `before-${v}-after`
 })
+//when config a single key value, the priority is: single > global, then expireAt > expire
 store.set("test", 1, {
-      //2024-12-24 14:00过期
+    //expire at 2024-12-24 14:00
     expireAt: "2024-12-24 14:00";
-    //Start after setting the key successfully, expire after 36000 milliseconds or 3 days
-    // expire: 36000 or [3, "day"];
-    //value will be automatically deleted after being read once
+    // expire: 60  //or [3, "day"];
+    //the value will  be delete after readed once.
     //once: true
 })
 store.get("test")
 ```
 
-## 版权
+## 跨平台
+
+Support web, WeChat miniprogram, Alipay miniprogram, it will be automatic configed according to different platforms, no additional configuration required.
+
+## Copyright
 
 MIT © [jaluik](https://github.com/jaluik)

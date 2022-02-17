@@ -1,6 +1,6 @@
 # vstores
 
-[English](README_EN.md) | 中文
+中文 | [English](README_EN.md)
 
 Ts 类型友好、支持过期时间的、功能强大的、跨平台存储器。
 
@@ -41,23 +41,30 @@ store.get('test');
 
 ```typescript
 import vstores from 'vstores'
-/** 全局配置存值的过期时间，可以从当前日期起设置过期天数秒数等，或指定特定时间 */
+/** 全局配置存值的过期时间*/
 const store = vstores.create({
-    //2024-12-24 14:00过期
+    //可以指定特定时间，如：2024-12-24 14:00过期
     expireAt: "2024-12-24 14:00";
-    //设置成功key后开始， 36000毫秒后过期
-    // expire: 36000;
+    //可以从当前日期起设置过期天数秒数等，如 60秒后过期或者3天后过期
+    expire: 60  //or [3, "day"];
+    //格式化key值，如原始key为 name, 实际存储值为before-name-after
+    formatKey: (v)=> `before-${v}-after`
 })
+//或者在设置单个key值设置值， 优先顺序为首先是：单个> 全局， 然后再是 expireAt > expire
 store.set("test", 1, {
       //2024-12-24 14:00过期
     expireAt: "2024-12-24 14:00";
     //设置成功key后开始， 36000毫秒后过期 或者 3天后过期
-    // expire: 36000 or [3, "day"];
+    // expire: 36000 or ;
     //只能读取一次，读取一次后失效自动删除
     //once: true
 })
 store.get("test")
 ```
+
+## 跨平台
+
+支持 web 端、微信小程序、支付宝小程序，根据不同平台自动适配，无需额外配置
 
 ## 版权
 
