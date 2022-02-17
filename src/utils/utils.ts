@@ -1,3 +1,7 @@
+import wxAdapter from '../adapter/wx';
+import aliAdapter from '../adapter/ali';
+import webAdaper from '../adapter/web';
+
 /** 过滤对象的空值属性以及方法属性 */
 export const filterEmptyValueAndFuncValue = (
   data: Record<string, any>
@@ -19,3 +23,19 @@ export const filterEmptyValueAndFuncValue = (
   );
   return Object.keys(res).length === 0 ? void 0 : res;
 };
+
+export const getDefaultAdapter = () => {
+  if (typeof window === 'object') {
+    return webAdaper;
+  }
+  if (typeof wx === 'object') {
+    return wxAdapter;
+  }
+  if (typeof my === 'object') {
+    return aliAdapter;
+  }
+  throw new Error('you need to define an adapter');
+};
+
+declare const my: any;
+declare const wx: any;

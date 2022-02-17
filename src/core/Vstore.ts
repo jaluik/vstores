@@ -1,6 +1,8 @@
 import { VstoreConfig, VstoreSetConfig } from '../types/types';
-import { filterEmptyValueAndFuncValue } from '../utils/utils';
-import webAdapter from '../adapter/web';
+import {
+  filterEmptyValueAndFuncValue,
+  getDefaultAdapter,
+} from '../utils/utils';
 import dayjs from 'dayjs';
 
 class Vstore<T extends object> {
@@ -8,7 +10,7 @@ class Vstore<T extends object> {
 
   constructor(config?: VstoreConfig) {
     this.config = config || {};
-    this.config.adapter = this.config.adapter || webAdapter;
+    this.config.adapter = this.config.adapter || getDefaultAdapter();
   }
   set<K extends keyof T>(
     originalKey: K,
