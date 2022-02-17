@@ -1,24 +1,28 @@
-export default {
-  set(key, value) {
+import { VstoreAdapter } from '../types/types';
+
+const webAdaper: VstoreAdapter = {
+  set(key: string, value: Record<string, any>): void {
     return window.localStorage.setItem(key, JSON.stringify(value));
   },
-  get(key) {
+  get(key: string): Record<string, any> | void {
     try {
       const result = window.localStorage.getItem(key);
       if (result) {
         return JSON.parse(result);
       } else {
-        return result;
+        return void 0;
       }
     } catch (err) {
       console.log('err', err);
       return void 0;
     }
   },
-  del(key) {
+  del(key: string): void {
     return window.localStorage.removeItem(key);
   },
-  clear() {
+  clear(): void {
     return window.localStorage.clear();
   },
 };
+
+export default webAdaper;
