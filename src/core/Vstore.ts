@@ -5,7 +5,7 @@ import {
 } from '../utils/utils';
 import dayjs from 'dayjs';
 
-class Vstore<T extends object> {
+class Vstore<T extends object = any> {
   config: VstoreConfig;
 
   constructor(config?: VstoreConfig) {

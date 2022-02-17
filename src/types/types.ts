@@ -1,12 +1,13 @@
 export interface VstoreConfig {
   expireAt?: string | number;
-  expire?: number | [number, string];
+  expire?: number | [number, ManipulateType];
   adapter?: VstoreAdapter;
   formatKey?: (v: string) => string;
 }
 
 export interface VstoreSetConfig
   extends Omit<VstoreConfig, 'adapter' | 'formatKey'> {
+  /** used once */
   once?: boolean;
 }
 
@@ -17,10 +18,29 @@ export interface VstoreAdapter {
   clear(): void;
 }
 
-export interface SavedDataType {
-  data: any;
-  /** Set expiration time in milliseconds  */
-  expireAt?: number;
-  /** used once */
-  once?: boolean;
-}
+type UnitTypeShort = 'd' | 'M' | 'y' | 'h' | 'm' | 's' | 'ms';
+
+type UnitTypeLong =
+  | 'millisecond'
+  | 'second'
+  | 'minute'
+  | 'hour'
+  | 'day'
+  | 'month'
+  | 'year'
+  | 'date';
+
+type UnitTypeLongPlural =
+  | 'milliseconds'
+  | 'seconds'
+  | 'minutes'
+  | 'hours'
+  | 'days'
+  | 'months'
+  | 'years'
+  | 'dates';
+
+type UnitType = UnitTypeLong | UnitTypeLongPlural | UnitTypeShort;
+
+type OpUnitType = UnitType | 'week' | 'weeks' | 'w';
+type ManipulateType = Omit<OpUnitType, 'date' | 'dates'>;
