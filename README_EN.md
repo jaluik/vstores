@@ -1,10 +1,10 @@
-# vstore
+# vstores
 
 English | [中文](README.md)
 
 Typescript friendly, Powerful, Expiration time supported, and multi-platform storage.
 
-## 安装
+## Install
 
 First make sure that the node and npm environments are installed locally, and execute follow code in the terminal environment
 
