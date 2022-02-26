@@ -152,6 +152,14 @@ describe('Test Vstore with realData', () => {
       vstore.set('test3', 1);
       expect(savedData['test3'].expireAt).not.toBeUndefined();
     });
+    it('should set base unit is second when set expire', () => {
+      vstore.set('test3', 1, {
+        expire: 8,
+      });
+      expect(savedData['test3'].expireAt).toBe(
+        dayjs().add(8, 'second').valueOf()
+      );
+    });
   });
   describe('Test expire config order in order : key config.expireAt > key config.expire > vstore config expireAt > vstore config expire', () => {
     it('should key config.expireAt > key config.expire', () => {
