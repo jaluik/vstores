@@ -2,35 +2,16 @@ import { VstoreAdapter } from './../types/types';
 
 const wxAdapter: VstoreAdapter = {
   set(key: string, value: Record<string, any>): void {
-    try {
-      wx.setStorageSync(key, value);
-    } catch (err) {
-      console.log('wx.setStorageSync err:', err);
-    }
+    wx.setStorageSync(key, value);
   },
   get(key: string): Record<string, any> | void {
-    try {
-      return wx.getStorageSync(key);
-    } catch (err) {
-      console.log('wx.getStorageSync err:', err);
-      return void 0;
-    }
+    return wx.getStorageSync(key);
   },
   del(key: string): void {
-    try {
-      return wx.removeStorageSync(key);
-    } catch (err) {
-      console.log('wx.removeStorageSync err:', err);
-      return void 0;
-    }
+    return wx.removeStorageSync(key);
   },
   clear(): void {
-    try {
-      return wx.clearStorageSync();
-    } catch (err) {
-      console.log('wx.clearStorageSync err:', err);
-      return void 0;
-    }
+    return wx.clearStorageSync();
   },
 };
 

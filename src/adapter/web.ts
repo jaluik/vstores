@@ -5,15 +5,10 @@ const webAdaper: VstoreAdapter = {
     return window.localStorage.setItem(key, JSON.stringify(value));
   },
   get(key: string): Record<string, any> | void {
-    try {
-      const result = window.localStorage.getItem(key);
-      if (result) {
-        return JSON.parse(result);
-      } else {
-        return void 0;
-      }
-    } catch (err) {
-      console.log('err', err);
+    const result = window.localStorage.getItem(key);
+    if (result) {
+      return JSON.parse(result);
+    } else {
       return void 0;
     }
   },

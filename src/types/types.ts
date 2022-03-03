@@ -3,6 +3,7 @@ export interface VstoreConfig {
   expire?: number | [number, ManipulateType];
   adapter?: VstoreAdapter;
   formatKey?: (v: string) => string;
+  errorHandler?: (err: any) => void | false;
 }
 
 export interface VstoreSetConfig

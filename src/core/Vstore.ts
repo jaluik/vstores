@@ -26,37 +26,53 @@ class Vstore<T extends object = any> {
     };
     const data = filterEmptyValueAndFuncValue(originData);
     if (data) {
-      this.config.adapter.set(key, data);
+      try {
+        this.config.adapter.set(key, data);
+      } catch (err) {
+        this.config.errorHandler?.(err);
+      }
     }
     return this;
   }
   get<K extends keyof T>(originalKey: K): T[K] | undefined {
     const key = this.getKey(originalKey);
-    const result = this.config.adapter.get(key);
-    if (!result) {
-      return void 0;
-    }
-    if (result.expireAt) {
-      const isexpired = dayjs().isAfter(dayjs(result.expireAt));
-      if (isexpired) {
-        this.del(key);
+    try {
+      const result = this.config.adapter.get(key);
+      if (!result) {
         return void 0;
+      }
+      if (result.expireAt) {
+        const isexpired = dayjs().isAfter(dayjs(result.expireAt));
+        if (isexpired) {
+          this.del(key);
+          return void 0;
+        } else {
+          return result.data;
+        }
       } else {
+        if (result?.once) {
+          this.del(key);
+        }
         return result.data;
       }
-    } else {
-      if (result?.once) {
-        this.del(key);
-      }
-      return result.data;
+    } catch (err) {
+      this.config.errorHandler?.(err);
     }
   }
   del(originalKey) {
     const key = this.getKey(originalKey);
-    return this.config.adapter.del(key);
+    try {
+      return this.config.adapter.del(key);
+    } catch (err) {
+      this.config.errorHandler?.(err);
+    }
   }
   clear() {
-    return this.config.adapter.clear();
+    try {
+      return this.config.adapter.clear();
+    } catch (err) {
+      this.config.errorHandler?.(err);
+    }
   }
   private getKey(key) {
     if (this.config.formatKey) {
