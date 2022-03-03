@@ -7,7 +7,7 @@ export interface VstoreConfig {
 }
 
 export interface VstoreSetConfig
-  extends Omit<VstoreConfig, 'adapter' | 'formatKey'> {
+  extends Omit<VstoreConfig, 'adapter' | 'formatKey' | 'errorHandler'> {
   /** used once */
   once?: boolean;
 }

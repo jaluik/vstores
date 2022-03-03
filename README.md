@@ -62,6 +62,90 @@ store.set("test", 1, {
 store.get("test")
 ```
 
+## API
+
+### 创建实例
+
+- 直接导出的 vsotes 是一个实例对象
+- 也可以通过`vstores.create(config)`创建新的实例
+
+### 实例上的方法
+
+#### get(key: string): any
+
+获取存储值
+
+```typescript
+const data = vstores.get('key');
+```
+
+#### set(key: string, value: any, config?: InstanceConfig): vstores
+
+设置存储值及配置项目
+
+```typescript
+vstores.set('key', data);
+
+// or
+
+vstores.set('key', data, {
+  expireAt: '2024-02-04 12:24',
+  expirt: [2, 'day'] || 3600, //3600 单位是秒
+  once: true,
+});
+```
+
+#### del(key: string): void
+
+删除 key 对应的存储值
+
+```typescript
+vstores.del('key');
+```
+
+#### clear(): void
+
+删除所有存储值
+
+```typescript
+vstores.clear();
+```
+
+### 配置项
+
+#### 全局配置
+
+```typescript
+import vstores from 'vstores'
+/** 全局配置存值的过期时间*/
+const store = vstores.create({
+    //指定具体的过期时间
+    expireAt: "2024-12-24 14:00";
+    //指定过期时间距离现在还有多久
+    expire: 60  //or [3, "day"];
+    //格式化key值，如原始key为 name, 实际存储值为before-name-after
+    formatKey: (v)=> `before-${v}-after`,
+    //跨平台的存储器
+    adaper: webadpater,
+    //异常处理器
+    errorHandler: (err)=> console.log(err)
+})
+
+```
+
+#### set 方法的配置
+
+```typescript
+vstores.set('key', data, {
+  //指定具体的过期时间
+  expireAt: '2024-02-04 12:24',
+  //指定过期时间距离现在还有多久
+  expirt: [2, 'day'] || 3600, //3600 单位是秒
+  //读取一次后会删除这个存储
+  once: true,
+});
+```
+
 ## 跨平台
 
 支持 web 端、微信小程序、支付宝小程序，根据不同平台自动适配，无需额外配置
