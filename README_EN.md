@@ -61,7 +61,88 @@ store.set("test", 1, {
 store.get("test")
 ```
 
-## 跨平台
+## API
+
+### create instance
+
+- default export is a vstores instance
+- create vstores instance by `vstores.create(config)`
+
+### instance method
+
+#### get(key: string): any
+
+get value by key
+
+```typescript
+const data = vstores.get('key');
+```
+
+#### set(key: string, value: any, config?: InstanceConfig): vstores
+
+set value with key
+
+```typescript
+vstores.set('key', data);
+
+// or
+
+vstores.set('key', data, {
+  expireAt: '2024-02-04 12:24',
+  expirt: [2, 'day'] || 3600, //3600 seconds
+  once: true,
+});
+```
+
+#### del(key: string): void
+
+```typescript
+vstores.del('key');
+```
+
+#### clear(): void
+
+clear all values
+
+```typescript
+vstores.clear();
+```
+
+### config
+
+#### global config
+
+```typescript
+import vstores from 'vstores'
+const store = vstores.create({
+    //specified expire time
+    expireAt: "2024-12-24 14:00";
+    // expire time from now
+    expire: 60  //or [3, "day"];
+    //how to format key
+    formatKey: (v)=> `before-${v}-after`,
+    //cross-platform adapter
+    adaper: webadpater,
+    //error handler
+    errorHandler: (err)=> console.log(err)
+})
+
+```
+
+#### set method config
+
+```typescript
+vstores.set('key', data, {
+  //specified expire time
+  expireAt: '2024-02-04 12:24',
+  //expire time from now
+  expirt: [2, 'day'] || 3600, //3600 second
+  //read once, and data will delete after read
+  once: true,
+});
+```
+
+## cross-platform
 
 Support web, WeChat miniprogram, Alipay miniprogram, it will be automatic configed according to different platforms, no additional configuration required.
 
