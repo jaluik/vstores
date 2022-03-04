@@ -12,6 +12,14 @@ class Vstore<T extends object = any> {
     this.config = config || {};
     this.config.adapter = this.config.adapter || getDefaultAdapter();
   }
+
+  /**
+   * Sets the value of the pair identified by key to value
+   * @param originalKey key
+   * @param value data
+   * @param config VstoreSetConfig
+   * @returns vstore
+   */
   set<K extends keyof T>(
     originalKey: K,
     value: T[K],
@@ -34,6 +42,12 @@ class Vstore<T extends object = any> {
     }
     return this;
   }
+
+  /**
+   * Get the current value associated with the given key, or undefined if the given key does not exist.
+   * @param originalKey key
+   * @returns  data
+   */
   get<K extends keyof T>(originalKey: K): T[K] | undefined {
     const key = this.getKey(originalKey);
     try {
@@ -59,7 +73,13 @@ class Vstore<T extends object = any> {
       this.config.errorHandler?.(err);
     }
   }
-  del(originalKey: keyof T) {
+
+  /**
+   * Removes the key/value pair with the given key, if a key/value pair with the given key exists.
+   * @param originalKey key
+   * @returns void;
+   */
+  del(originalKey: keyof T): void {
     const key = this.getKey(originalKey);
     try {
       return this.config.adapter.del(key);
@@ -67,6 +87,10 @@ class Vstore<T extends object = any> {
       this.config.errorHandler?.(err);
     }
   }
+  /**
+   * Removes all the key/value pair.
+   * @returns void;
+   */
   clear() {
     try {
       return this.config.adapter.clear();
@@ -107,6 +131,12 @@ class Vstore<T extends object = any> {
 
     return void 0;
   }
+
+  /**
+   * Create new vstores instance
+   * @param config VstoreConfig
+   * @returns vstore
+   */
   create<D extends object>(config?: VstoreConfig) {
     return new Vstore<D>(config);
   }
