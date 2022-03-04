@@ -26,7 +26,6 @@
   "scripts": {
     "dev": "tsup src/index.ts --format cjs,esm --watch --dts --sourcemap",
     "test": "jest --collectCoverage",
-    "test:coverage": "jest --coverage && coveralls < coverage/lcov.info",
     "build": "tsup src/index.ts --format cjs,esm --dts --clean --minify",
     "release": "npm version patch",
     "postversion": "git push --follow-tags"
