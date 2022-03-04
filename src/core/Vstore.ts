@@ -59,7 +59,7 @@ class Vstore<T extends object = any> {
       this.config.errorHandler?.(err);
     }
   }
-  del(originalKey) {
+  del(originalKey: keyof T) {
     const key = this.getKey(originalKey);
     try {
       return this.config.adapter.del(key);
