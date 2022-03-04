@@ -1,5 +1,7 @@
 # vstores
 
+![GitHub CI](https://github.com/jaluik/vstores/actions/workflows/publish.yml/badge.svg)
+
 中文 | [English](README_EN.md)
 
 Ts 类型友好、支持过期时间的、功能强大的、跨平台存储器。
