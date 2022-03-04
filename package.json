@@ -26,6 +26,7 @@
   "scripts": {
     "dev": "tsup src/index.ts --format cjs,esm --watch --dts --sourcemap",
     "test": "jest --collectCoverage",
+    "test:coverage": "jest --coverage && coveralls < coverage/lcov.info",
     "build": "tsup src/index.ts --format cjs,esm --dts --clean --minify",
     "release": "npm version patch",
     "postversion": "git push --follow-tags"
@@ -34,6 +35,7 @@
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-typescript": "^7.16.5",
     "@types/jest": "^27.0.3",
+    "coveralls": "^3.1.1",
     "eslint": "^8.5.0",
     "jest": "^27.4.5",
     "rimraf": "^3.0.2",
