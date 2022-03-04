@@ -1,5 +1,7 @@
 # vstores
 
+![GitHub CI](https://github.com/jaluik/vstores/actions/workflows/publish.yml/badge.svg)[![Coverage Status](https://coveralls.io/repos/github/jaluik/vstores/badge.svg?branch=master)](https://coveralls.io/github/jaluik/vstores?branch=master)
+
 [中文](README.md) | English
 
 Typescript friendly, Powerful, Expiration time supported, and cross-platform storage.
