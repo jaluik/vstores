@@ -2,7 +2,7 @@
 
 [中文](README.md) | English
 
-Typescript friendly, Powerful, Expiration time supported, and multi-platform storage.
+Typescript friendly, Powerful, Expiration time supported, and cross-platform storage.
 
 ## Install
 

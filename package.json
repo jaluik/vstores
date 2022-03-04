@@ -1,12 +1,12 @@
 {
   "name": "vstores",
-  "version": "0.0.3",
-  "description": "multi-platform storage",
+  "version": "0.0.4",
+  "description": "cross-platform storage",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "keywords": [
     "localStorage",
-    "multi-platform",
+    "cross-platform",
     "wx",
     "ali",
     "storage"
