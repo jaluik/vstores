@@ -1,6 +1,6 @@
 {
   "name": "vstores",
-  "version": "0.0.4",
+  "version": "0.0.3",
   "description": "cross-platform storage",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -26,7 +26,8 @@
   "scripts": {
     "dev": "tsup src/index.ts --format cjs,esm --watch --dts --sourcemap",
     "test": "jest --collectCoverage",
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean --minify"
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean --minify",
+    "release": "npm version patch && git commit -am v$npm_package_version && git tag v$npm_package_version && git push && git push --tags"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.5",
