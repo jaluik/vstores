@@ -9,7 +9,9 @@ const webAdaper: VstoreAdapter = {
     if (result) {
       return JSON.parse(result);
     } else {
-      return void 0;
+      return {
+        data: result,
+      };
     }
   },
   del(key: string): void {
