@@ -19,16 +19,20 @@ describe('Test Web adapter', () => {
   afterAll(() => {
     delete global.window;
   });
-  it('should called withe right params in web', () => {
+  it('should called with right params in web', () => {
     const store = new Vstore<{ test: number }>();
     store.set('test', 2);
     expect(mockSetFn).toBeCalledWith('test', JSON.stringify({ data: 2 }));
+
     store.get('test');
     expect(mockGetFn).toBeCalledWith('test');
+
     mockGetFn.mockReturnValue('invalid object');
     expect(store.get('test')).toBeUndefined();
+
     store.del('test');
     expect(mockDelFn).toBeCalledWith('test');
+
     store.clear();
     expect(mockClearFn).toBeCalledWith();
   });
@@ -46,25 +50,18 @@ describe('Test Weixin adapter', () => {
   afterAll(() => {
     delete global.wx;
   });
-  it('should called withe right params in web', () => {
+  it('should called with right params in weixin', () => {
     const store = new Vstore<{ test: number }>();
     store.set('test', 2);
     expect(mockSetFn).toBeCalledWith('test', JSON.stringify({ data: 2 }));
 
-    mockSetFn.mockRejectedValue(new Error('error'));
     store.set('test', 3);
     expect(mockSetFn).toBeCalledWith('test', { data: 3 });
 
     store.get('test');
     expect(mockGetFn).toBeCalledWith('test');
 
-    mockGetFn.mockRejectedValue(new Error('error'));
-    expect(store.get('test')).toBeUndefined();
-
     store.del('test');
-    expect(mockDelFn).toBeCalledWith('test');
-
-    mockDelFn.mockRejectedValue(new Error('error'));
     expect(mockDelFn).toBeCalledWith('test');
 
     store.clear();
@@ -76,6 +73,8 @@ describe('Test Weixin adapter', () => {
 });
 
 describe('Test Ali adapter', () => {
+  let store: Vstore;
+  const errorFn = jest.fn();
   beforeAll(() => {
     (global as any).my = {
       setStorageSync: mockSetFn,
@@ -83,35 +82,68 @@ describe('Test Ali adapter', () => {
       removeStorageSync: mockDelFn,
       clearStorageSync: mockClearFn,
     };
+    store = new Vstore<{ test: number }>({
+      errorHandler: errorFn,
+    });
   });
   afterAll(() => {
     delete global.wx;
   });
-  it('should called withe right params in web', () => {
-    const store = new Vstore<{ test: number }>();
-    store.set('test', 2);
-    expect(mockSetFn).toBeCalledWith('test', JSON.stringify({ data: 2 }));
-
-    mockSetFn.mockRejectedValue(new Error('error'));
-    store.set('test', 3);
-    expect(mockSetFn).toBeCalledWith('test', { data: 3 });
-
+  beforeEach(() => {
+    mockSetFn.mockClear();
+    mockGetFn.mockClear();
+    mockDelFn.mockClear();
+    mockClearFn.mockClear();
+    errorFn.mockClear();
+  });
+  it('should called with right params in ali with get Func', () => {
     store.get('test');
-    expect(mockGetFn).toBeCalledWith('test');
+    expect(mockGetFn).toHaveBeenLastCalledWith({ key: 'test' });
 
-    mockGetFn.mockRejectedValue(new Error('error'));
+    mockGetFn.mockReturnValueOnce({ data: { data: 1 } });
+    expect(store.get('test')).toBe(1);
+
+    mockGetFn.mockReturnValueOnce({ error: 'error get' });
+    store.get('test');
+    expect(errorFn).toHaveBeenLastCalledWith('error get');
+
+    mockGetFn.mockReturnValueOnce(undefined);
     expect(store.get('test')).toBeUndefined();
+  });
+  it('should called with right params in ali with set Func', () => {
+    store.set('test', 2);
+    expect(mockSetFn).toHaveBeenLastCalledWith({
+      key: 'test',
+      data: { data: 2 },
+    });
 
+    mockSetFn.mockReturnValueOnce({ error: 'error set' });
+    store.set('test', 1);
+    expect(errorFn).toHaveBeenLastCalledWith('error set');
+
+    mockSetFn.mockReturnValueOnce({ error: undefined });
+    store.set('test', 1);
+    expect(errorFn).not.toHaveBeenLastCalledWith();
+  });
+  it('should called with right params in ali with del Func', () => {
     store.del('test');
-    expect(mockDelFn).toBeCalledWith('test');
+    expect(mockDelFn).toHaveBeenLastCalledWith({ key: 'test' });
 
-    mockDelFn.mockRejectedValue(new Error('error'));
-    expect(mockDelFn).toBeCalledWith('test');
+    mockDelFn.mockReturnValueOnce({ error: 'error del' });
+    store.del('test');
+    expect(errorFn).toHaveBeenLastCalledWith('error del');
 
+    mockDelFn.mockReturnValueOnce({ error: undefined });
+    store.del('test');
+    expect(errorFn).not.toHaveBeenLastCalledWith();
+  });
+
+  it('should called with right params in ali with clear Func', () => {
     store.clear();
     expect(mockClearFn).toBeCalled();
 
-    mockClearFn.mockRejectedValue(new Error('error'));
-    expect(mockClearFn).toBeCalled();
+    mockClearFn.mockReturnValueOnce({ error: 'error clear' });
+    store.clear();
+    expect(errorFn).toHaveBeenLastCalledWith('error clear');
   });
 });

@@ -2,7 +2,7 @@ import { VstoreAdapter } from '../types/types';
 
 const aliAdapter: VstoreAdapter = {
   set(key: string, value: Record<string, any>): void {
-    const res = my.setStorageSync({ key, data: JSON.stringify(value) });
+    const res = my.setStorageSync({ key, data: value });
     if (res.error) {
       throw res.error;
     }
@@ -13,7 +13,7 @@ const aliAdapter: VstoreAdapter = {
       if (res.error) {
         throw res.error;
       }
-      return typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
+      return res.data;
     } else {
       return void 0;
     }
@@ -49,7 +49,7 @@ declare const my: {
   getStorageSync(config: {
     /** 本地缓存中指定的 key */
     key: string;
-  }): { error?: string; data: string | Readonly<Record<string, any>> };
+  }): { error?: string; data: Readonly<Record<string, any>> };
   removeStorageSync(config: {
     /** 本地缓存中指定的 key */
     key: string;
