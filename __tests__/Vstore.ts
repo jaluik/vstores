@@ -32,6 +32,10 @@ describe('Test Vstores  with mock Fn', () => {
     it('should return Vstore instance', () => {
       expect(vstore).toBeInstanceOf(Vstore);
     });
+    it('should return Vstore instance by createcall', () => {
+      const vstore1 = vstore.create(vstore.config);
+      expect(vstore1).toBeInstanceOf(Vstore);
+    });
     it('should format the key', () => {
       vstore.config.formatKey = (key) => `${key}_formatted`;
       vstore.set('test', 1);
@@ -152,6 +156,12 @@ describe('Test Vstore with realData', () => {
       vstore.set('test3', 1);
       expect(savedData['test3'].expireAt).not.toBeUndefined();
     });
+    it('should return undefined when expire is invalid', () => {
+      vstore.config.expireAt = void 0;
+      vstore.config.expire = 'UNKOWN' as unknown as number;
+      vstore.set('test4', 1);
+      expect(savedData['test4'].expire).toBeUndefined();
+    });
     it('should set base unit is second when set expire', () => {
       vstore.set('test3', 1, {
         expire: 8,
@@ -161,6 +171,7 @@ describe('Test Vstore with realData', () => {
       );
     });
   });
+
   describe('Test expire config order in order : key config.expireAt > key config.expire > vstore config expireAt > vstore config expire', () => {
     it('should key config.expireAt > key config.expire', () => {
       vstore.set('test3', 1, {

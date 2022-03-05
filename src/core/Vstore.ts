@@ -116,7 +116,7 @@ class Vstore<T extends object = any> {
     }
 
     if (config?.expire || this.config.expire) {
-      const expire = config.expire || this.config.expire;
+      const expire = config?.expire || this.config.expire;
       let obj;
       if (typeof expire === 'number') {
         obj = dayjs().add(expire, 's');
@@ -126,10 +126,7 @@ class Vstore<T extends object = any> {
       if (obj.isValid()) {
         return obj.valueOf();
       }
-      return void 0;
     }
-
-    return void 0;
   }
 
   /**
