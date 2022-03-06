@@ -28,7 +28,7 @@ describe('Test Web adapter', () => {
     expect(mockGetFn).toBeCalledWith('test');
 
     mockGetFn.mockReturnValue('invalid object');
-    expect(store.get('test')).toBeUndefined();
+    expect(store.get('test')).toBe('invalid object');
 
     store.del('test');
     expect(mockDelFn).toBeCalledWith('test');

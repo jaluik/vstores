@@ -7,11 +7,11 @@ const webAdaper: VstoreAdapter = {
   get(key: string): Record<string, any> | void {
     const result = window.localStorage.getItem(key);
     if (result) {
-      return JSON.parse(result);
-    } else {
-      return {
-        data: result,
-      };
+      try {
+        return JSON.parse(result);
+      } catch {
+        return { data: result };
+      }
     }
   },
   del(key: string): void {
