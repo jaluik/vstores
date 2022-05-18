@@ -1,6 +1,6 @@
 # vstores
 
-![GitHub CI](https://github.com/jaluik/vstores/actions/workflows/publish.yml/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/jaluik/vstores/badge.svg?branch=master)](https://coveralls.io/github/jaluik/vstores?branch=master) ![Minified Size](https://badgen.net/bundlephobia/min/vstores)
+![GitHub CI](https://github.com/jaluik/vstores/actions/workflows/publish.yml/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/jaluik/vstores/badge.svg?branch=master)](https://coveralls.io/github/jaluik/vstores?branch=master) ![Minified Size](https://badgen.net/bundlephobia/minzip/vstores)
 
 [中文](README.md) | English
 
