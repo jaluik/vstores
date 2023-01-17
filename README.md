@@ -128,7 +128,7 @@ const store = vstores.create({
     //格式化key值，如原始key为 name, 实际存储值为before-name-after
     formatKey: (v)=> `before-${v}-after`,
     //跨平台的存储器
-    adaper: webadpater,
+    adapter: webAdapter,
     //异常处理器
     errorHandler: (err)=> console.log(err)
 })

@@ -124,7 +124,7 @@ const store = vstores.create({
     //how to format key
     formatKey: (v)=> `before-${v}-after`,
     //cross-platform adapter
-    adaper: webadpater,
+    adapter: webAdapter,
     //error handler
     errorHandler: (err)=> console.log(err)
 })
