@@ -78,6 +78,7 @@ describe('Test Vstores  with mock Fn', () => {
 describe('Test Vstore with realData', () => {
   let savedData = {};
   beforeAll(() => {
+    createVstoreAndReset();
     vstore.config.adapter = {
       set: (key, value) => {
         savedData[key] = value;
@@ -203,5 +204,40 @@ describe('Test Vstore with realData', () => {
         dayjs(savedData['test3'].expireAt).format('YYYY-MM-DD HH:mm:ss')
       ).toBe(dayjs().add(9, 'second').format('YYYY-MM-DD HH:mm:ss'));
     });
+  });
+});
+
+describe('Test Vstores  with no adapter', () => {
+  beforeEach(() => {
+    vstore = new Vstore({
+      adapter: undefined,
+    });
+  });
+
+  const errMsg = 'you need to define an adapter';
+
+  it('should throw error  with get function', () => {
+    const getError = () => {
+      vstore.get('test');
+    };
+    expect(getError).toThrowError(new Error(errMsg));
+  });
+  it('should throw error  with set function', () => {
+    const getError = () => {
+      vstore.set('test', 1);
+    };
+    expect(getError).toThrowError(new Error(errMsg));
+  });
+  it('should throw error  with del function', () => {
+    const getError = () => {
+      vstore.del('test');
+    };
+    expect(getError).toThrowError(new Error(errMsg));
+  });
+  it('should throw error  with clear function', () => {
+    const getError = () => {
+      vstore.clear();
+    };
+    expect(getError).toThrowError(new Error(errMsg));
   });
 });
