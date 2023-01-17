@@ -1,6 +1,6 @@
 {
   "name": "vstores",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "cross-platform storage",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
