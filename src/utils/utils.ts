@@ -1,6 +1,6 @@
 import wxAdapter from '../adapter/wx';
 import aliAdapter from '../adapter/ali';
-import webAdaper from '../adapter/web';
+import webAdapter from '../adapter/web';
 
 /** 过滤对象的空值属性以及方法属性 */
 export const filterEmptyValueAndFuncValue = (
@@ -26,7 +26,7 @@ export const filterEmptyValueAndFuncValue = (
 
 export const getDefaultAdapter = () => {
   if (typeof window === 'object') {
-    return webAdaper;
+    return webAdapter;
   }
   if (typeof wx === 'object') {
     return wxAdapter;

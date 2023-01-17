@@ -4,11 +4,11 @@ import {
 } from '../src/utils/utils';
 import wxAdapter from '../src/adapter/wx';
 import aliAdapter from '../src/adapter/ali';
-import webAdaper from '../src/adapter/web';
+import webAdapter from '../src/adapter/web';
 
 describe('Test filterEmptyValueAndFuncValue Fn in utils', () => {
   it('should return undefined when data is not object or null', () => {
-    expect(filterEmptyValueAndFuncValue(null)).toBeUndefined();
+    expect(filterEmptyValueAndFuncValue(null as any)).toBeUndefined();
   });
   it('should filterEmptyValue', () => {
     expect(filterEmptyValueAndFuncValue({ a: '' })).toBeUndefined();
@@ -27,23 +27,23 @@ describe('Test filterEmptyValueAndFuncValue Fn in utils', () => {
 
 describe('Test getDefaultAdapter Fn in utils', () => {
   beforeEach(() => {
-    global.window = undefined;
+    (global as any).window = undefined;
     global.wx = undefined;
     global.my = undefined;
   });
   it('should return web adapter in web', () => {
     global.window = {} as any;
-    expect(getDefaultAdapter()).toBe(webAdaper);
+    expect(getDefaultAdapter()).toBe(webAdapter);
   });
   it('should return wx adapter in wx', () => {
     global.wx = {} as any;
     expect(getDefaultAdapter()).toBe(wxAdapter);
   });
-  it('should return ali adapter in aliplatform', () => {
+  it('should return ali adapter in ali platform', () => {
     global.my = {} as any;
     expect(getDefaultAdapter()).toBe(aliAdapter);
   });
-  it('should throw error when aliplatform not matched', () => {
+  it('should throw error when ali platform not matched', () => {
     const getError = () => {
       getDefaultAdapter();
     };
