@@ -17,7 +17,7 @@ describe('Test Web adapter', () => {
     };
   });
   afterAll(() => {
-    delete global.window;
+    delete (global as any).window;
   });
   it('should called with right params in web', () => {
     const store = new Vstore<{ test: number }>();
