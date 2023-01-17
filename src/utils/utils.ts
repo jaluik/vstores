@@ -34,7 +34,7 @@ export const getDefaultAdapter = () => {
   if (typeof my === 'object') {
     return aliAdapter;
   }
-  throw new Error('you need to define an adapter');
+  return undefined;
 };
 
 declare const my: any;

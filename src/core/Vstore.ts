@@ -25,6 +25,7 @@ class Vstore<T extends object = any> {
     value: T[K],
     config?: VstoreSetConfig
   ) {
+    this.checkAdapter();
     const key = this.getKey(originalKey);
     const expireAt = this.getExpireAt(config);
     const originData = {
@@ -49,8 +50,12 @@ class Vstore<T extends object = any> {
    * @returns  data
    */
   get<K extends keyof T>(originalKey: K): T[K] | undefined {
+    this.checkAdapter();
     const key = this.getKey(originalKey);
     try {
+      if (!this.config.adapter) {
+        throw new Error('you need to define an adapter');
+      }
       const result = this.config.adapter.get(key);
       if (!result) {
         return void 0;
@@ -80,8 +85,12 @@ class Vstore<T extends object = any> {
    * @returns void;
    */
   del(originalKey: keyof T): void {
+    this.checkAdapter();
     const key = this.getKey(originalKey);
     try {
+      if (!this.config.adapter) {
+        throw new Error('you need to define an adapter');
+      }
       return this.config.adapter.del(key);
     } catch (err) {
       this.config.errorHandler?.(err);
@@ -92,7 +101,11 @@ class Vstore<T extends object = any> {
    * @returns void;
    */
   clear() {
+    this.checkAdapter();
     try {
+      if (!this.config.adapter) {
+        throw new Error('you need to define an adapter');
+      }
       return this.config.adapter.clear();
     } catch (err) {
       this.config.errorHandler?.(err);
@@ -126,6 +139,12 @@ class Vstore<T extends object = any> {
       if (obj.isValid()) {
         return obj.valueOf();
       }
+    }
+  }
+
+  private checkAdapter() {
+    if (!this.config.adapter) {
+      throw new Error('you need to define an adapter');
     }
   }
 

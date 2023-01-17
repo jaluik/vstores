@@ -43,10 +43,7 @@ describe('Test getDefaultAdapter Fn in utils', () => {
     global.my = {} as any;
     expect(getDefaultAdapter()).toBe(aliAdapter);
   });
-  it('should throw error when ali platform not matched', () => {
-    const getError = () => {
-      getDefaultAdapter();
-    };
-    expect(getError).toThrowError(new Error('you need to define an adapter'));
+  it('should return undefined when ali platform not matched', () => {
+    expect(getDefaultAdapter()).toBe(undefined);
   });
 });
