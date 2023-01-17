@@ -1,8 +1,8 @@
 import Vstore from './core/Vstore';
-export * as webAdaper from './adapter/web';
-export * as wxAdapter from './adapter/wx';
-export * as aliAdapter from './adapter/ali';
+import webAdaper from './adapter/web';
+import wxAdapter from './adapter/wx';
+import aliAdapter from './adapter/ali';
 
 const vstore = new Vstore();
 
-export default vstore;
+export { vstore as default, webAdaper, wxAdapter, aliAdapter };
