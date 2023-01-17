@@ -53,9 +53,6 @@ class Vstore<T extends object = any> {
     this.checkAdapter();
     const key = this.getKey(originalKey);
     try {
-      if (!this.config.adapter) {
-        throw new Error('you need to define an adapter');
-      }
       const result = this.config.adapter.get(key);
       if (!result) {
         return void 0;
@@ -88,9 +85,6 @@ class Vstore<T extends object = any> {
     this.checkAdapter();
     const key = this.getKey(originalKey);
     try {
-      if (!this.config.adapter) {
-        throw new Error('you need to define an adapter');
-      }
       return this.config.adapter.del(key);
     } catch (err) {
       this.config.errorHandler?.(err);
@@ -103,9 +97,6 @@ class Vstore<T extends object = any> {
   clear() {
     this.checkAdapter();
     try {
-      if (!this.config.adapter) {
-        throw new Error('you need to define an adapter');
-      }
       return this.config.adapter.clear();
     } catch (err) {
       this.config.errorHandler?.(err);
