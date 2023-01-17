@@ -1,6 +1,6 @@
 import { VstoreAdapter } from '../types/types';
 
-const webAdaper: VstoreAdapter = {
+const webAdapter: VstoreAdapter = {
   set(key: string, value: Record<string, any>): void {
     return window.localStorage.setItem(key, JSON.stringify(value));
   },
@@ -22,4 +22,4 @@ const webAdaper: VstoreAdapter = {
   },
 };
 
-export default webAdaper;
+export default webAdapter;
