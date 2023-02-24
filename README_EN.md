@@ -39,6 +39,25 @@ store.set('test', 1);
 store.get('test');
 ```
 
+### Adapters
+
+Built-in 4 adapters for different platforms：
+
+web: `webAdapter`, `sessionAdapter`
+
+wechat-mini: `wxAdapter`
+
+ali-mini: `aliAdapter`
+
+```typescript
+import {
+  webAdapter,
+  sessionAdapter,
+  sessionAdapter,
+  aliAdapter,
+} from 'vstores';
+```
+
 ### Set expire time
 
 ```typescript

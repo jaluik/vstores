@@ -144,6 +144,23 @@ const store = vstores.create({
 
 ```
 
+### Adapters
+
+内置了 4 种适配器适用于不同平台：
+
+web 端：`webAdapter`, `sessionAdapter`
+微信小程序：`wxAdapter`
+支付宝小程序： `aliAdapter`,
+
+```typescript
+import {
+  webAdapter,
+  sessionAdapter,
+  sessionAdapter,
+  aliAdapter,
+} from 'vstores';
+```
+
 #### set 方法的配置
 
 ```typescript
