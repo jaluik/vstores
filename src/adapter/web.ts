@@ -1,12 +1,22 @@
 import { VstoreAdapter } from '../types/types';
 
-const adapterFactory = (type: Storage) => {
+const adapterFactory = (type: 'localStorage' | 'sessionStorage') => {
+  function getStore() {
+    if (type === 'localStorage') {
+      return window.localStorage;
+    } else {
+      return window.sessionStorage;
+    }
+  }
+
   return {
     set(key: string, value: Record<string, any>): void {
-      return type.setItem(key, JSON.stringify(value));
+      const store = getStore();
+      return store.setItem(key, JSON.stringify(value));
     },
     get(key: string): Record<string, any> | void {
-      const result = type.getItem(key);
+      const store = getStore();
+      const result = store.getItem(key);
       if (result) {
         try {
           return JSON.parse(result);
@@ -16,16 +26,16 @@ const adapterFactory = (type: Storage) => {
       }
     },
     del(key: string): void {
-      return type.removeItem(key);
+      const store = getStore();
+      return store.removeItem(key);
     },
     clear(): void {
-      return type.clear();
+      const store = getStore();
+      return store.clear();
     },
   };
 };
 
-export const webAdapter: VstoreAdapter = adapterFactory(window.localStorage);
+export const webAdapter: VstoreAdapter = adapterFactory('localStorage');
 
-export const sessionAdapter: VstoreAdapter = adapterFactory(
-  window.sessionStorage
-);
+export const sessionAdapter: VstoreAdapter = adapterFactory('sessionStorage');
