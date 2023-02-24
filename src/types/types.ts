@@ -1,13 +1,17 @@
-export interface VstoreConfig {
+export interface VstoreConfig<T> {
   expireAt?: string | number;
   expire?: number | [number, ManipulateType];
   adapter?: VstoreAdapter;
   formatKey?: (v: string) => string;
   errorHandler?: (err: any) => void | false;
+  defaultValues?: Partial<T>;
 }
 
 export interface VstoreSetConfig
-  extends Omit<VstoreConfig, 'adapter' | 'formatKey' | 'errorHandler'> {
+  extends Omit<
+    VstoreConfig<any>,
+    'adapter' | 'formatKey' | 'errorHandler' | 'defaultValues'
+  > {
   /** used once */
   once?: boolean;
 }

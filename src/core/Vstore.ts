@@ -6,9 +6,9 @@ import {
 import dayjs from 'dayjs';
 
 class Vstore<T extends object = any> {
-  config: VstoreConfig;
+  config: VstoreConfig<T>;
 
-  constructor(config?: VstoreConfig) {
+  constructor(config?: VstoreConfig<T>) {
     this.config = config || {};
     this.config.adapter = this.config.adapter || getDefaultAdapter();
   }
@@ -50,30 +50,11 @@ class Vstore<T extends object = any> {
    * @returns  data
    */
   get<K extends keyof T>(originalKey: K): T[K] | undefined {
-    this.checkAdapter();
-    const key = this.getKey(originalKey);
-    try {
-      const result = this.config.adapter.get(key);
-      if (!result) {
-        return void 0;
-      }
-      if (result.expireAt) {
-        const isexpired = dayjs().isAfter(dayjs(result.expireAt));
-        if (isexpired) {
-          this.del(key);
-          return void 0;
-        } else {
-          return result.data;
-        }
-      } else {
-        if (result?.once) {
-          this.del(key);
-        }
-        return result.data;
-      }
-    } catch (err) {
-      this.config.errorHandler?.(err);
+    const storageVal = this.getStorageValue(originalKey);
+    if (storageVal === undefined) {
+      return this.getDefaultValue(originalKey);
     }
+    return storageVal;
   }
 
   /**
@@ -133,6 +114,40 @@ class Vstore<T extends object = any> {
     }
   }
 
+  private getStorageValue<K extends keyof T>(originalKey: K): T[K] | undefined {
+    this.checkAdapter();
+    const key = this.getKey(originalKey);
+    try {
+      const result = this.config.adapter.get(key);
+      if (!result) {
+        return void 0;
+      }
+      if (result.expireAt) {
+        const isexpired = dayjs().isAfter(dayjs(result.expireAt));
+        if (isexpired) {
+          this.del(key);
+          return void 0;
+        } else {
+          return result.data;
+        }
+      } else {
+        if (result?.once) {
+          this.del(key);
+        }
+        return result.data;
+      }
+    } catch (err) {
+      this.config.errorHandler?.(err);
+    }
+  }
+
+  private getDefaultValue(key) {
+    if (this.config.defaultValues) {
+      return this.config.defaultValues[key];
+    }
+    return void 0;
+  }
+
   private checkAdapter() {
     if (!this.config.adapter) {
       throw new Error('you need to define an adapter');
@@ -144,7 +159,7 @@ class Vstore<T extends object = any> {
    * @param config VstoreConfig
    * @returns vstore
    */
-  create<D extends object>(config?: VstoreConfig) {
+  create<D extends object>(config?: VstoreConfig<D>) {
     return new Vstore<D>(config);
   }
 }
