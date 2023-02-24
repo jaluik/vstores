@@ -50,7 +50,11 @@ const store = vstores.create({
     //You can set the time to expire from the current date. eg expire after 60 seconds or 3 days
     expire: 60  //or [3, "day"];
     //format key, eg if key is name, the real saved key will be before-name-after
-    formatKey: (v)=> `before-${v}-after`
+    formatKey: (v)=> `before-${v}-after`,
+    //default value
+    // defaultValues: {
+    //   [key]: value
+    // }
 })
 //when config a single key value, the priority is: single > global, then expireAt > expire
 store.set("test", 1, {
@@ -126,7 +130,11 @@ const store = vstores.create({
     //cross-platform adapter
     adapter: webAdapter,
     //error handler
-    errorHandler: (err)=> console.log(err)
+    errorHandler: (err)=> console.log(err),
+    //default value
+    defaultValues: {
+      [key]: value
+    }
 })
 
 ```

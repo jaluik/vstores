@@ -46,11 +46,16 @@ import vstores from 'vstores'
 /** 全局配置存值的过期时间*/
 const store = vstores.create({
     //可以指定特定时间，如：2024-12-24 14:00过期
-    expireAt: "2024-12-24 14:00";
+    expireAt: "2024-12-24 14:00",
     //可以从当前日期起设置过期天数秒数等，如 60秒后过期或者3天后过期
-    expire: 60  //or [3, "day"];
+    expire: 60,  //or [3, "day"];
     //格式化key值，如原始key为 name, 实际存储值为before-name-after
-    formatKey: (v)=> `before-${v}-after`
+    formatKey: (v)=> `before-${v}-after`,
+    //对于key获取值为undefined时，返回对应的默认值
+    // defaultValues: {
+    //   [key]: value
+    // }
+
 })
 //或者在设置单个key值设置值， 优先顺序为首先是：单个> 全局， 然后再是 expireAt > expire
 store.set("test", 1, {
@@ -130,7 +135,11 @@ const store = vstores.create({
     //跨平台的存储器
     adapter: webAdapter,
     //异常处理器
-    errorHandler: (err)=> console.log(err)
+    errorHandler: (err)=> console.log(err),
+    //对于key获取值为undefined时，返回对应的默认值
+    // defaultValues: {
+    //   [key]: value
+    // }
 })
 
 ```
