@@ -1,6 +1,6 @@
 import { VstoreAdapter } from '../types/types';
 
-const aliAdapter: VstoreAdapter = {
+export const aliAdapter: VstoreAdapter = {
   set(key: string, value: Record<string, any>): void {
     const res = my.setStorageSync({ key, data: value });
     if (res.error) {
@@ -31,8 +31,6 @@ const aliAdapter: VstoreAdapter = {
     }
   },
 };
-
-export default aliAdapter;
 
 declare const my: {
   setStorageSync(config: {

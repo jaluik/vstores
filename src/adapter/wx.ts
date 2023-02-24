@@ -1,6 +1,6 @@
 import { VstoreAdapter } from './../types/types';
 
-const wxAdapter: VstoreAdapter = {
+export const wxAdapter: VstoreAdapter = {
   set(key: string, value: Record<string, any>): void {
     wx.setStorageSync(key, value);
   },
@@ -14,8 +14,6 @@ const wxAdapter: VstoreAdapter = {
     return wx.clearStorageSync();
   },
 };
-
-export default wxAdapter;
 
 declare const wx: {
   setStorageSync<T = any>(
