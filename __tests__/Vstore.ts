@@ -79,6 +79,9 @@ describe('Test Vstore with realData', () => {
   let savedData = {};
   beforeAll(() => {
     createVstoreAndReset();
+    vstore.config.defaultValues = {
+      name: 'defaultName',
+    };
     vstore.config.adapter = {
       set: (key, value) => {
         savedData[key] = value;
@@ -108,6 +111,9 @@ describe('Test Vstore with realData', () => {
       vstore.set('test', { a: 1 }, { once: true });
       expect(vstore.get('test')).toMatchObject({ a: 1 });
       expect(vstore.get('test')).toBeUndefined();
+    });
+    it('should return defaultValue when defaultValues set', () => {
+      expect(vstore.get('name')).toBe('defaultName');
     });
     it('should return undefined after del key', () => {
       vstore.set('test', 1);

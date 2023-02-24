@@ -2,9 +2,9 @@ import {
   filterEmptyValueAndFuncValue,
   getDefaultAdapter,
 } from '../src/utils/utils';
-import wxAdapter from '../src/adapter/wx';
-import aliAdapter from '../src/adapter/ali';
-import webAdapter from '../src/adapter/web';
+import { wxAdapter } from '../src/adapter/wx';
+import { aliAdapter } from '../src/adapter/ali';
+import { webAdapter } from '../src/adapter/web';
 
 describe('Test filterEmptyValueAndFuncValue Fn in utils', () => {
   it('should return undefined when data is not object or null', () => {

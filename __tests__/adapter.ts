@@ -1,4 +1,5 @@
 import Vstore from '../src/core/Vstore';
+import { sessionAdapter } from '../src/adapter/web';
 
 const mockGetFn = jest.fn();
 const mockSetFn = jest.fn();
@@ -35,6 +36,27 @@ describe('Test Web adapter', () => {
 
     store.clear();
     expect(mockClearFn).toBeCalledWith();
+  });
+});
+
+describe('Test Session adapter', () => {
+  beforeAll(() => {
+    (global as any).window = {
+      sessionStorage: {
+        setItem: mockSetFn,
+        getItem: mockGetFn,
+        removeItem: mockDelFn,
+        clear: mockClearFn,
+      },
+    };
+  });
+  afterAll(() => {
+    delete (global as any).window;
+  });
+  it('should called with right params in web', () => {
+    const store = new Vstore<{ test: number }>({ adapter: sessionAdapter });
+    store.set('test', 2);
+    expect(mockSetFn).toBeCalledWith('test', JSON.stringify({ data: 2 }));
   });
 });
 
