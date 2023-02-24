@@ -39,25 +39,6 @@ store.set('test', 1);
 store.get('test');
 ```
 
-### Adapters
-
-Built-in 4 adapters for different platforms：
-
-web: `webAdapter`, `sessionAdapter`
-
-wechat-mini: `wxAdapter`
-
-ali-mini: `aliAdapter`
-
-```typescript
-import {
-  webAdapter,
-  sessionAdapter,
-  sessionAdapter,
-  aliAdapter,
-} from 'vstores';
-```
-
 ### Set expire time
 
 ```typescript
@@ -174,6 +155,25 @@ vstores.set('key', data, {
 ## cross-platform
 
 Support web, WeChat miniprogram, Alipay miniprogram, it will be automatic configed according to different platforms, no additional configuration required.
+
+### adapter
+
+There are 4 built-in adapters for different platforms, which can be specified manually:
+
+web ：`webAdapter`（use localStorage）, `sessionAdapter`（use sessionStorage）
+
+wechat-mini`wxAdapter`
+
+ali mini `aliAdapter`
+
+Manually specify the adapter method:
+
+```typescript
+import vstores, { sessionAdapter } from 'vstores';
+const store = vstores.create({
+  adapter: sessionAdapter,
+});
+```
 
 ## Copyright
 

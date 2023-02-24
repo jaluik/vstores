@@ -144,23 +144,6 @@ const store = vstores.create({
 
 ```
 
-### Adapters
-
-内置了 4 种适配器适用于不同平台：
-
-web 端：`webAdapter`, `sessionAdapter`
-微信小程序：`wxAdapter`
-支付宝小程序： `aliAdapter`,
-
-```typescript
-import {
-  webAdapter,
-  sessionAdapter,
-  sessionAdapter,
-  aliAdapter,
-} from 'vstores';
-```
-
 #### set 方法的配置
 
 ```typescript
@@ -177,6 +160,25 @@ vstores.set('key', data, {
 ## 跨平台
 
 支持 web 端、微信小程序、支付宝小程序，根据不同平台自动适配，无需额外配置
+
+### 跨平台适配器
+
+内置了 4 种适配器适用于不同平台，可以手动指定：
+
+web 端：`webAdapter`（使用 localStorage）, `sessionAdapter`（使用 sessionStorage）
+
+微信小程序：`wxAdapter`
+
+支付宝小程序： `aliAdapter`
+
+手动指定适配器方式：
+
+```typescript
+import vstores, { sessionAdapter } from 'vstores';
+const store = vstores.create({
+  adapter: sessionAdapter,
+});
+```
 
 ## 版权
 
