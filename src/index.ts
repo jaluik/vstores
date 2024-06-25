@@ -7,4 +7,4 @@ const vstore = new Vstore({
   errorHandler: console.error,
 });
 
-export { vstore as default, webAdapter, wxAdapter, aliAdapter, sessionAdapter };
+export { vstore as default, webAdapter, wxAdapter, aliAdapter, sessionAdapter, Vstore };
