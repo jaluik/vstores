@@ -43,7 +43,7 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "dayjs": "*"
+    "dayjs": "^1.10.7"
   },
   "files": [
     "dist/"
